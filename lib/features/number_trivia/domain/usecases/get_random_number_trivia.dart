@@ -6,7 +6,6 @@ import 'package:flutter_clean_architecture/features/number_trivia/domain/reposit
 
 class GetRandomNumberTrivia implements UseCase<NumberTrivia, NoParams> {
    final NumberTriviaRepository repository;
-
   GetRandomNumberTrivia(this.repository);
 
   @override
