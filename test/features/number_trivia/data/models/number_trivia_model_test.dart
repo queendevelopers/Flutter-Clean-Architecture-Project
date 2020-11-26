@@ -32,12 +32,12 @@ void main() {
         });
   });
 
-  group('toJson', ()
-  {
+  group('toJson', () {
     test('should return a valid model when the JSON number is an integer',
             () async {
           final result = tNumberTrivivaModel.toJson();
           final expectedMap = {'text': 'Test Text', 'number': 1};
           expect(result, expectedMap);
         });
-  }
+  });
+}
