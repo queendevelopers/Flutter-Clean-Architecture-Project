@@ -19,10 +19,10 @@ class MockNumberTriviaRepository extends Mock
     final tNumber = 1;
     final tNumberTrivia = NumberTrivia(number: 1, text: 'test');
 
-    test('should get trivia for thenumber from the repository', () async {
+    test('should get trivia for th number from the repository', () async {
       when(mockNumberTriviaRepository.getConcreateNumberTrivia(any))
           .thenAnswer((realInvocation) async =>Right(tNumberTrivia));
-      final result=await usecase(number:tNumber);
+      final result=await usecase(Params(number: tNumber));
       expect(result,Right(tNumberTrivia));
       verify(mockNumberTriviaRepository.getConcreateNumberTrivia(tNumber));
       verifyNoMoreInteractions(mockNumberTriviaRepository);
