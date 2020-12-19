@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_clean_architecture/core/error/exception.dart';
 import 'package:flutter_clean_architecture/core/error/failure.dart';
 import 'package:flutter_clean_architecture/core/platform/network_info.dart';
 import 'package:flutter_clean_architecture/core/platform/number_trivia_local_data_source.dart';
@@ -17,14 +18,27 @@ class NumberTriviaRepositoryImplementation implements NumberTriviaRepository {
       @required this.networkInfo});
 
   @override
-  Future<Either<Failure, NumberTrivia>> getConcreateNumberTrivia(int number) {
-    // TODO: implement getConcreateNumberTrivia
-    throw UnimplementedError();
+  Future<Either<Failure, NumberTrivia>> getConcreteNumberTrivia(int number) async {
+    if(await networkInfo.isConnected){
+      try{
+        final remoteTrivia= await remoteDataSource.getConcreteNumberTrivia(number);
+        localDataSource.cacheNumberTrivia(remoteTrivia);
+        return Right(remoteTrivia);
+      } on ServerException{
+        return Left(ServerFailure());
+      }
+    }else{
+      try{
+        final localTrivia =await localDataSource.getLastNumberTrivia();
+        return Right(localTrivia);
+      } on CacheFailure{
+        return Left(CacheFailure());
+      }
+    }
   }
 
   @override
-  Future<Either<Failure, NumberTrivia>> getRandomConcreateNumberTrivia() {
-    // TODO: implement getRandomConcreateNumberTrivia
-    throw UnimplementedError();
+  Future<Either<Failure, NumberTrivia>> getRandomNumberTrivia() {
+    return null;
   }
 }

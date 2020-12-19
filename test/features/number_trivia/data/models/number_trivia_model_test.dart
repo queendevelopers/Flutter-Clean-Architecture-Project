@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
-  final tNumberTrivivaModel = NumberTriviaModel(number: 1, text: 'Test Text');
+  final  tNumberTrivivaModel = NumberTriviaModel(number: 1, text: 'test');
   test('should be a subclass of NumberTrivia entity', () async {
     expect(tNumberTrivivaModel, isA<NumberTrivia>());
   });
@@ -19,7 +19,7 @@ void main() {
               fixture('trivia.json'));
           print(jsonMap['text']);
           final result = NumberTriviaModel.fromJson(jsonMap);
-          expect(result, equals(tNumberTrivivaModel));
+          expect(result, tNumberTrivivaModel);
         });
 
     test(
@@ -33,10 +33,10 @@ void main() {
   });
 
   group('toJson', () {
-    test('should return a valid model when the JSON number is an integer',
+    test('should return a JSON map containing the proper data',
             () async {
           final result = tNumberTrivivaModel.toJson();
-          final expectedMap = {'text': 'Test Text', 'number': 1};
+          final expectedMap = {'text': 'test', 'number': 1};
           expect(result, expectedMap);
         });
   });

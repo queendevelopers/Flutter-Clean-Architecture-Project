@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter_clean_architecture/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:flutter_clean_architecture/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:flutter_clean_architecture/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,14 +18,14 @@ class MockNumberTriviaRepository extends Mock
     });
 
     final tNumber = 1;
-    final tNumberTrivia = NumberTrivia(number: 1, text: 'test');
+    final tNumberTrivia = NumberTriviaModel(number: 1, text: 'test');
 
     test('should get trivia for th number from the repository', () async {
-      when(mockNumberTriviaRepository.getConcreateNumberTrivia(any))
+      when(mockNumberTriviaRepository.getConcreteNumberTrivia(any))
           .thenAnswer((realInvocation) async =>Right(tNumberTrivia));
       final result=await usecase(Params(number: tNumber));
       expect(result,Right(tNumberTrivia));
-      verify(mockNumberTriviaRepository.getConcreateNumberTrivia(tNumber));
+      verify(mockNumberTriviaRepository.getConcreteNumberTrivia(tNumber));
       verifyNoMoreInteractions(mockNumberTriviaRepository);
     });
 

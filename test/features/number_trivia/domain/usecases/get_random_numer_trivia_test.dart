@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_clean_architecture/core/usecases/usecase.dart';
+import 'package:flutter_clean_architecture/features/number_trivia/data/models/number_trivia_model.dart';
 import 'package:flutter_clean_architecture/features/number_trivia/domain/entities/number_trivia.dart';
 import 'package:flutter_clean_architecture/features/number_trivia/domain/repositories/number_trivia_repository.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -17,14 +18,14 @@ void main() {
     usecase = GetRandomNumberTrivia(mockNumberTriviaRepository);
   });
 
-  final tNumberTrivia = NumberTrivia(number: 1, text: 'test');
+  final tNumberTrivia = NumberTriviaModel(text:'test',number: 1);
 
   test('should get trivia from the repository', () async {
-    when(mockNumberTriviaRepository.getRandomConcreateNumberTrivia())
+    when(mockNumberTriviaRepository.getRandomNumberTrivia())
         .thenAnswer((realInvocation) async =>Right(tNumberTrivia));
     final result=await usecase(NoParams());
     expect(result,Right(tNumberTrivia));
-    verify(mockNumberTriviaRepository.getRandomConcreateNumberTrivia());
+    verify(mockNumberTriviaRepository.getRandomNumberTrivia());
     verifyNoMoreInteractions(mockNumberTriviaRepository);
   });
 
